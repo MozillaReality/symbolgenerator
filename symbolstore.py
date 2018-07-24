@@ -573,6 +573,7 @@ class Dumper_Mac(Dumper):
 
 def Upload_Symbol(zip_file):
     print("Uploading symbol file '{0}' to '{1}'".format(zip_file, DEFAULT_SYMBOL_URL), file=sys.stdout)
+    zip_name = os.path.basename(zip_file)
 
     # Fetch the symbol server token from Taskcluster secrets
     secrets_url = "http://taskcluster/secrets/v1/secret/{}".format("project/firefoxreality/symbols-token")
@@ -590,7 +591,7 @@ def Upload_Symbol(zip_file):
             if zip_file.startswith("http"):
                 zip_arg = {"data": {"url", zip_file}}
             else:
-                zip_arg = {"files": {"symbols.zip": open(zip_file, 'rb')}}
+                zip_arg = {"files": {zip_name: open(zip_file, 'rb')}}
             r = requests.post(
                 DEFAULT_SYMBOL_URL,
                 headers={"Auth-Token": auth_token},
@@ -664,11 +665,11 @@ to canonical locations in the source repository. Specify
     lib_folder = args[2]
     lib_name = os.path.basename(lib_folder)
     device_name =  args[3]
-    output_folder = args[1] + "/zip/" + device_name + "-" + lib_name
+    symbol_name = device_name + "-" + lib_name
 
     # Remove the existed symbol output folder
     symbol_folder = args[1] + "/" + lib_name
-    output_folder = args[1] + "/zip/" + device_name + "-" + lib_name
+    output_folder = args[1] + "/zip/" + symbol_name
     if os.path.isdir(symbol_folder):
         shutil.rmtree(symbol_folder)
     if os.path.isdir(output_folder):
@@ -696,9 +697,9 @@ to canonical locations in the source repository. Specify
         os.mkdir(args[1] + "/zip", 0755)
     if not os.path.isdir(output_folder):
         os.mkdir(output_folder, 0755)
-    
+
     try:
-        shutil.copytree(symbol_folder, output_folder + lib_folder[lib_folder.rfind('/'):])
+        shutil.copytree(symbol_folder, output_folder + "/" + lib_name)
     except OSError as e:
         raise IOError(errno.ENOENT, "Directory not copied", e)
 
