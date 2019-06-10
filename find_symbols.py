@@ -13,6 +13,7 @@ import sys
 
 platforms = {
    'wavevr',
+   'oculusvr3dof',
    'oculusvr',
    'googlevr',
    'noapi',
@@ -69,6 +70,7 @@ def main(name, argv):
       print 'platform: "' + platform + '" library: "' + lib + '" objcopy: "' + objcopy + '"'
       args = ['python', app, '-c', '-s', '.', dumpPath, symbolsPath, lib, platform]
       penv = dict(os.environ, OBJCOPY=objcopy)
+      # print " ".join(args)
       print subprocess.check_output(args, env=penv)
 
 if __name__ == "__main__":
