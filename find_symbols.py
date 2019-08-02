@@ -12,8 +12,10 @@ import subprocess
 import sys
 
 platforms = {
+   'wavevrStore',
    'wavevr',
-   'oculusvr3dof',
+   'oculusvr3dofStore',
+   'oculusvrStore',
    'oculusvr',
    'googlevr',
    'noapi',
@@ -24,6 +26,7 @@ objcopyMap = {
    'arm' : 'tools/taskcluster/symbols/bin/arm-linux-androideabi-objcopy',
    'arm64' : 'tools/taskcluster/symbols/bin/aarch64-linux-android-objcopy',
    'x86' : 'tools/taskcluster/symbols/bin/i686-linux-android-objcopy',
+   'x86_64' : 'tools/taskcluster/symbols/bin/x86_64-linux-android-objcopy',
 }
 
 def find_platform(path):
