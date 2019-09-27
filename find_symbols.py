@@ -34,7 +34,7 @@ def find_platform(path):
    values = path.split('/')
    for part in values:
       for platform in platforms:
-         if part.find(platform) == 0:
+         if part.startswith(platform):
             return part.lower()
    print 'Unable to find platform from path: "' + path + '"'
    sys.exit(1)
@@ -42,7 +42,7 @@ def find_platform(path):
 def find_objcopy(platform):
    global objcopyMap
    for arch, tool in objcopyMap.iteritems():
-      if platform.endswith(arch):
+      if platform.endswith(arch + 'release'):
          return tool
    print "Unknown platform architecture: " + platform
    sys.exit(1)
@@ -67,7 +67,7 @@ def main(name, argv):
       elif opt in ("-s"):
          symbolsPath = arg
 
-   for lib in glob.glob('./app/build/intermediates/cmake/*/release/obj/*/libnative-lib.so'):
+   for lib in glob.glob('./app/build/intermediates/cmake/*Release/obj/*/libnative-lib.so'):
       platform = find_platform(lib)
       objcopy = find_objcopy(platform)
       print 'platform: "' + platform + '" library: "' + lib + '" objcopy: "' + objcopy + '"'
