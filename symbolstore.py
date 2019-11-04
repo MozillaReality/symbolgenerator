@@ -576,7 +576,7 @@ def Upload_Symbol(zip_file):
     zip_name = os.path.basename(zip_file)
 
     # Fetch the symbol server token from Taskcluster secrets
-    secrets_url = "http://taskcluster/secrets/v1/secret/{}".format("project/firefoxreality/symbols-token")
+    secrets_url = "http://taskcluster/secrets/v1/secret/{}".format("project/firefoxreality/fr/symbols-token")
     res = requests.get(secrets_url)
     res.raise_for_status()
     secret = res.json()
