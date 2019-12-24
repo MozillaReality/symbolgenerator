@@ -17,6 +17,7 @@ platforms = {
    'oculusvr3dofStore',
    'oculusvrStore',
    'oculusvr',
+   'picovr',
    'googlevr',
    'noapi',
    'svr',
